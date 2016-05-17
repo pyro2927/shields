@@ -2737,7 +2737,7 @@ cache(function(data, match, sendBadge, request) {
   var user = match[1];  // eg, qubyte/rubidium
   var repo = match[2];
   var format = match[3];
-  var apiUrl = githubApiUrl + '/repos/' + user + '/' + repo + '/releases/latest';
+  var apiUrl = githubApiUrl + '/repos/' + user + '/' + repo + '/releases';
   // Using our OAuth App secret grants us 5000 req/hour
   // instead of the standard 60 req/hour.
   if (serverSecrets) {
@@ -2760,7 +2760,7 @@ cache(function(data, match, sendBadge, request) {
       if ((+res.headers['x-ratelimit-remaining']) === 0) {
         return;  // Hope for the best in the cache.
       }
-      var data = JSON.parse(buffer);
+      var data = JSON.parse(buffer)[0];
       var version = data.tag_name;
       var prerelease = data.prerelease;
       var vdata = versionColor(version);
